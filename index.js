@@ -122,9 +122,30 @@ class Invader {
   };
 }
 
+class Grid {
+  constructor() {
+    this.position = {
+      x: 0,
+      y: 0,
+    };
+    this.velocity = {
+      x: 0,
+      y: 0,
+    };
+
+    this.invaders = [new Invader()];
+
+    for (let i = 0; i < 10; i++){
+      this.invaders.push(new Invader())
+    }
+  }
+
+  update = () => {};
+}
+
 const player = new Player();
 const projectiles = [];
-const invader = new Invader();
+const grids = [new Grid()];
 const keys = {
   a: {
     pressed: false,
@@ -141,7 +162,6 @@ const animate = () => {
   requestAnimationFrame(animate);
   c.fillStyle = "black";
   c.fillRect(0, 0, canvas.width, canvas.height);
-  invader.update();
   player.update();
   projectiles.forEach((projectile, index) => {
     if (projectile.position.y + projectile.radius <= 0) {
@@ -149,6 +169,13 @@ const animate = () => {
     } else {
       projectile.update();
     }
+  });
+
+  grids.forEach((grid) => {
+    grid.update();
+    grid.invaders.forEach((invader) => {
+      invader.update();
+    });
   });
 
   if (keys.a.pressed && player.position.x >= 0) {
