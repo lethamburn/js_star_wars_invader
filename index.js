@@ -14,7 +14,7 @@ class Player {
     };
 
     this.rotation = 0;
-
+    this.opacity = 1;
     const image = new Image();
     image.src = "./assets/xwing.png";
     image.onload = () => {
@@ -31,6 +31,7 @@ class Player {
 
   draw() {
     c.save();
+    c.globalAlpha = this.opacity;
     c.translate(
       player.position.x + player.width / 2,
       player.position.y + player.height / 2
@@ -251,6 +252,10 @@ const keys = {
 
 let frames = 0;
 let randomInterval = Math.floor(Math.random() * 500 + 500);
+let game = {
+  over: false,
+  active: true,
+};
 
 for (let i = 0; i < 100; i++) {
   particles.push(
@@ -283,21 +288,22 @@ const createParticles = ({ object, color, fades }) => {
         },
         radius: Math.random() * 3,
         color: color || "orange",
-        fades: true
+        fades: true,
       })
     );
   }
 };
 
 const animate = () => {
+  if (!game.active) return;
   requestAnimationFrame(animate);
   c.fillStyle = "black";
   c.fillRect(0, 0, canvas.width, canvas.height);
   player.update();
   particles.forEach((particle, i) => {
-    if(particle.position.y - particle.radius >= canvas.height){
-      particle.position.x = Math.random() * canvas.width
-      particle.position.y = -particle.radius
+    if (particle.position.y - particle.radius >= canvas.height) {
+      particle.position.x = Math.random() * canvas.width;
+      particle.position.y = -particle.radius;
     }
     if (particle.opacity <= 0) {
       setTimeout(() => {
@@ -329,12 +335,18 @@ const animate = () => {
     ) {
       setTimeout(() => {
         invaderProjectiles.splice(index, 1);
+        player.opacity = 0;
+        game.over = true;
       }, 0);
-      console.log("YOU LOSE");
+
+      setTimeout(() => {
+        game.active = false;
+      }, 2000);
+
       createParticles({
         object: player,
         color: "red",
-        fades: true
+        fades: true,
       });
     }
   });
@@ -377,7 +389,7 @@ const animate = () => {
             if (invaderFound && projectileFound) {
               createParticles({
                 object: invader,
-                fades: true
+                fades: true,
               });
               grid.invaders.splice(i, 1);
               projectiles.splice(j, 1);
@@ -428,6 +440,7 @@ const animate = () => {
 animate();
 
 addEventListener("keydown", ({ key }) => {
+  if (game.over) return;
   switch (key) {
     case "a":
       keys.a.pressed = true;
