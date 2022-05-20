@@ -158,11 +158,11 @@ class Grid {
     this.position.x += this.velocity.x;
     this.position.y += this.velocity.y;
 
-    this.velocity.y = 0
+    this.velocity.y = 0;
 
     if (this.position.x + this.width >= canvas.width || this.position.x <= 0) {
       this.velocity.x = -this.velocity.x;
-      this.velocity.y = 30
+      this.velocity.y = 30;
     }
   }
 }
@@ -181,6 +181,9 @@ const keys = {
     pressed: false,
   },
 };
+
+let frames = 0;
+let randomInterval = Math.floor(Math.random() * 500 + 500);
 
 const animate = () => {
   requestAnimationFrame(animate);
@@ -215,6 +218,14 @@ const animate = () => {
     player.velocity.x = 0;
     player.rotation = 0;
   }
+
+  //SPAWN RANDOM INVADERS
+  if (frames % randomInterval === 0) {
+    grids.push(new Grid());
+    randomInterval = Math.floor(Math.random() * 500 + 500);
+    frames = 0
+  }
+  frames++;
 };
 
 animate();
