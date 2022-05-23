@@ -1,9 +1,16 @@
 const canvas = document.querySelector("canvas");
-
+const scoreEl = document.querySelector("#score");
+const liveEl = document.querySelector("#live")
 const c = canvas.getContext("2d");
 
-canvas.width = innerWidth;
-canvas.height = innerHeight;
+
+canvas.width = 1024;
+canvas.height = 576;
+
+//RESET GAME
+const reset = () => {
+  location.reload();
+}
 
 //MAIN PLAYER
 class Player {
@@ -66,7 +73,7 @@ class Projectile {
     this.position = position;
     this.velocity = velocity;
 
-    this.radius = 4;
+    this.radius = 2;
   }
   draw() {
     c.beginPath();
@@ -145,7 +152,7 @@ class Invader {
     const image = new Image();
     image.src = "./assets/tie.png";
     image.onload = () => {
-      const scale = 0.8;
+      const scale = 0.9;
       this.image = image;
       this.width = image.width * scale;
       this.height = image.height * scale;
@@ -257,6 +264,8 @@ let game = {
   active: true,
 };
 
+let score = 0;
+
 for (let i = 0; i < 100; i++) {
   particles.push(
     new Particle({
@@ -324,6 +333,7 @@ const animate = () => {
       }, 0);
     } else {
       invaderProjectile.update();
+
       //PROJECTILE HIT PLAYER
     }
     if (
@@ -337,6 +347,7 @@ const animate = () => {
         invaderProjectiles.splice(index, 1);
         player.opacity = 0;
         game.over = true;
+        liveEl.innerHTML = "YOU LOSE"
       }, 0);
 
       setTimeout(() => {
@@ -387,6 +398,8 @@ const animate = () => {
             );
             //REMOVE INVADER AND PROJECTILE WHEN FOUND
             if (invaderFound && projectileFound) {
+              score += 100;
+              scoreEl.innerHTML = score;
               createParticles({
                 object: invader,
                 fades: true,

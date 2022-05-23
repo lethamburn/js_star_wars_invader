@@ -1,0 +1,124 @@
+@import url("https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&display=swap");
+
+* {
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: black;
+  font-family: "Roboto", sans-serif;
+}
+
+.menu {
+  color: whitesmoke;
+  width: 100%;
+  height: 80vh;
+  padding: 10px;
+  border-right: #518cc3 4px dotted;
+}
+
+.menu > nav {
+  height: 80vh;
+}
+
+.menu > nav > ul {
+  height: 100%;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.menu nav > ul > li {
+  list-style-type: none;
+}
+
+.menu nav > ul > li > img {
+  width: 100%;
+}
+.menu nav > ul > li > p {
+  position: relative;
+  z-index: 10;
+  color: whitesmoke;
+  left: 10px;
+  top: 20px;
+  margin: 0;
+  font-size: 18px;
+  border-bottom: 4px solid #518cc3;
+  padding-bottom: 4px;
+}
+
+button {
+  border: none;
+  display: block;
+  position: relative;
+  padding: 0.7em 2.4em;
+  font-size: 18px;
+  background: transparent;
+  cursor: pointer;
+  user-select: none;
+  overflow: hidden;
+  color: whitesmoke;
+  z-index: 1;
+  font-family: inherit;
+  font-weight: 500;
+}
+
+button span {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background: transparent;
+  z-index: -1;
+  border: 4px solid #518cc3;
+}
+
+button span::before {
+  content: "";
+  display: block;
+  position: absolute;
+  width: 8%;
+  height: 500%;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) rotate(-60deg);
+  transition: all 0.3s;
+}
+
+button:hover span::before {
+  transform: translate(-50%, -50%) rotate(-90deg);
+  width: 100%;
+  background: #518cc3;
+}
+
+button:hover {
+  color: black;
+}
+
+button:active span::before {
+  background: #518cc3;
+}
+
+#live {
+  font-weight: bold;
+  color: crimson;
+}
+
+#controls {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  list-style-type: none;
+}
+
+#controls-title{
+    text-decoration: underline;
+}
