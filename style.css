@@ -11,6 +11,8 @@ body {
   align-items: center;
   background-color: black;
   font-family: "Roboto", sans-serif;
+  width: 100vw;
+  height: 100vh;
 }
 
 .menu {
